@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Simple LRU Cache</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LRU Cache Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Simple LRU Cache</h1>
-    <div class="flex-container">
-      <label>Cache Capacity:</label>
-      <input id="capacity" value="3">
-      <button onclick="initCache()">Initialize Cache</button>
-    </div>
-    <hr>
-    <div id="cacheOps" class="hidden">
-      <h2>Cache Operations</h2>
-      <div class="flex-container">
-        <label>Key:</label>
-        <input id="keyInput">
+  <main class="main-wrapper">
+    <section class="card">
+      <h1>🔁 LRU Cache Visualizer</h1>
+      <div class="input-group">
+        <input type="number" id="capacity" placeholder="Cache capacity (e.g. 3)" />
+        <button onclick="initCache()">Initialize</button>
+        <button class="secondary" onclick="clearCache()">Reset</button>
       </div>
-      <div class="flex-container">
-        <label>Value:</label>
-        <input id="valueInput">
+    </section>
+
+    <section id="cacheOps" class="card hidden">
+      <h2>🔧 Cache Controls</h2>
+      <div class="input-pair">
+        <input type="text" id="keyInput" placeholder="Key" />
+        <input type="text" id="valueInput" placeholder="Value" />
       </div>
-      <div class="button-group">
-        <button onclick="setCache()">Set Value</button>
-        <button onclick="getCache()">Get Value</button>
+      <div class="button-row">
+        <button onclick="setCache()">Set</button>
+        <button class="outline" onclick="getCache()">Get</button>
       </div>
-    </div>
-    <div class="result" id="result"></div>
-    <h3>Cache State (MRU -> LRU):</h3>
-    <div class="cache-state" id="cacheState">
-    </div>
-  </div>
+    </section>
+
+
+    <section class="card state-card">
+      <h3>📦 Cache State <span>(MRU → LRU)</span></h3>
+      <div id="cacheState" class="cache-state-box"></div>
+    </section>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>

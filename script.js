@@ -1,4 +1,3 @@
-
 class Node {
   constructor(key, value) {
     this.key = key;
@@ -12,8 +11,9 @@ class LRUCache {
   constructor(capacity) {
     this.capacity = capacity;
     this.map = new Map();
-    this.head = null; 
+    this.head = null;
   }
+
   addToFront(node) {
     if (this.head === null) {
       this.head = node;
@@ -26,9 +26,9 @@ class LRUCache {
       this.head = node;
     }
   }
-  
+
   removeNode(node) {
-    if (node.next === node) { 
+    if (node.next === node) {
       this.head = null;
     } else {
       node.prev.next = node.next;
@@ -38,21 +38,19 @@ class LRUCache {
       }
     }
   }
-  
+
   moveToFront(node) {
     this.removeNode(node);
     this.addToFront(node);
   }
-  
+
   get(key) {
-    if (!this.map.has(key)) {
-      return -1;
-    }
+    if (!this.map.has(key)) return -1;
     const node = this.map.get(key);
     this.moveToFront(node);
     return node.value;
   }
-  
+
   put(key, value) {
     if (this.map.has(key)) {
       const node = this.map.get(key);
@@ -69,12 +67,10 @@ class LRUCache {
       this.map.set(key, newNode);
     }
   }
-  
+
   state() {
     const result = [];
-    if (this.head === null) {
-      return result;
-    }
+    if (this.head === null) return result;
     let current = this.head;
     do {
       result.push({ key: current.key, value: current.value });
@@ -84,9 +80,7 @@ class LRUCache {
   }
 }
 
-
 let cache = null;
-
 
 window.initCache = () => {
   const cap = Number(document.getElementById("capacity").value);
@@ -100,13 +94,25 @@ window.initCache = () => {
   }
 };
 
+window.clearCache = () => {
+  cache = null;
+  document.getElementById("cacheOps").classList.add("hidden");
+  document.getElementById("result").textContent = "Cache cleared.";
+  document.getElementById("cacheState").innerHTML = "";
+};
+
 window.setCache = () => {
-  const key = document.getElementById("keyInput").value;
-  const value = document.getElementById("valueInput").value;
+  const keyEl = document.getElementById("keyInput");
+  const valueEl = document.getElementById("valueInput");
+  const key = keyEl.value;
+  const value = valueEl.value;
+
   if (key && value) {
     cache.put(key, value);
     document.getElementById("result").textContent = `Set ${key} to ${value}.`;
     updateDisplay();
+    keyEl.value = "";
+    valueEl.value = "";
   } else {
     alert("Enter both key and value.");
   }
@@ -124,28 +130,24 @@ window.getCache = () => {
   }
 };
 
-
 const updateDisplay = () => {
-  const stateData = cache.state();
+  const stateData = cache?.state() ?? [];
   const container = document.getElementById("cacheState");
-  container.innerHTML = ""; // Clear previous content
-  
+  container.innerHTML = "";
+
   if (stateData.length === 0) {
     container.textContent = "Cache is empty.";
     return;
   }
-  
- 
+
   const frag = document.createDocumentFragment();
-  
+
   stateData.forEach((item, index) => {
-    // Create a badge for each cache item.
     const badge = document.createElement("span");
     badge.className = "cache-item";
     badge.textContent = `${item.key}:${item.value}`;
     frag.appendChild(badge);
-    
-   
+
     if (index < stateData.length - 1) {
       const arrow = document.createElement("span");
       arrow.className = "arrow";
@@ -153,6 +155,6 @@ const updateDisplay = () => {
       frag.appendChild(arrow);
     }
   });
-  
+
   container.appendChild(frag);
 };
