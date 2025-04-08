@@ -80,6 +80,13 @@ button.outline:hover {
   display: none;
 }
 
+.result-text {
+  background-color: #f1f3f5;
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
 .cache-state-box {
   display: flex;
   flex-wrap: wrap;
